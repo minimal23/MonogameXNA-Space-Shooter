@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>/home/alice/monogameTest/monogameTest/Content/explode.wav</SourceFile>
+  <SourceTime>2013-02-03T12:20:56+07:00</SourceTime>
+  <DestFile>/home/alice/monogameTest/monogameTest/Content/bin/Windows/explode.xnb</DestFile>
+  <DestTime>2016-06-18T10:04:28+07:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2016-06-15T12:27:35+07:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-06-15T12:27:35+07:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

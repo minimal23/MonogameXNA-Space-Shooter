@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>/home/alice/monogameTest/monogameTest/Content/bg.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/enemy.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/enemybullet.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/playerbullet.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/ShipR.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/Decker.spritefont</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/explosion3.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/explode.wav</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/playershoot.wav</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/theme.mp3</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/Gamemenu.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/Gameover.png</File>
+  </SourceFiles>
+</SourceFileCollection>
