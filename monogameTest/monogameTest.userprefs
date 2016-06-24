@@ -1,9 +1,10 @@
 ﻿<Properties StartupItem="monogameTest/monogameTest.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="monogameTest/Game1.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="monogameTest/HUD.cs">
     <Files>
-      <File FileName="monogameTest/Game1.cs" Line="111" Column="20" />
-      <File FileName="monogameTest/Enemy.cs" Line="29" Column="13" />
+      <File FileName="monogameTest/Game1.cs" Line="293" Column="11" />
+      <File FileName="monogameTest/HUD.cs" Line="70" Column="1" />
+      <File FileName="monogameTest/Enemy.cs" Line="30" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

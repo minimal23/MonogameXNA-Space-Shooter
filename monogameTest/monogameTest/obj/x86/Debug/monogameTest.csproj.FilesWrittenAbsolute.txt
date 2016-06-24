@@ -27,3 +27,4 @@
 /home/alice/monogameTest/monogameTest/bin/Debug/Content/theme.xnb
 /home/alice/monogameTest/monogameTest/bin/Debug/Content/Gamemenu.xnb
 /home/alice/monogameTest/monogameTest/bin/Debug/Content/Gameover.xnb
+/home/alice/monogameTest/monogameTest/bin/Debug/Content/gamedifficulty.xnb

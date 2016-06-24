@@ -16,5 +16,6 @@
     <File>/home/alice/monogameTest/monogameTest/Content/theme.mp3</File>
     <File>/home/alice/monogameTest/monogameTest/Content/Gamemenu.png</File>
     <File>/home/alice/monogameTest/monogameTest/Content/Gameover.png</File>
+    <File>/home/alice/monogameTest/monogameTest/Content/gamedifficulty.png</File>
   </SourceFiles>
 </SourceFileCollection>

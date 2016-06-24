@@ -13,7 +13,7 @@ namespace monogameTest
 		public Texture2D texture, bulletTexture;
 		public Rectangle boundingBox;
 		public Vector2 position;
-		public int speed, hp, bulletDelay, currentDifficulty;
+		public int speed, hp, bulletDelay;
 		public bool isVisible;
 		public List<Bullet> bulletList;
 
@@ -24,7 +24,6 @@ namespace monogameTest
 			position = newPos;
 			bulletTexture = newBulletTexture;
 			hp = 100;
-			currentDifficulty = 1;
 			bulletDelay = 0;
 			speed = 5;
 			isVisible = true;
@@ -35,7 +34,6 @@ namespace monogameTest
 			boundingBox = new Rectangle((int)position.X, (int)position.Y, texture.Width, texture.Height);
 			position.Y += speed;
 			if (position.Y >= 640)
-				//position.Y = -100;
 				isVisible = false;
 			EnemyShoot();
 			UpdateBullet();

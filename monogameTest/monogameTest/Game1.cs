@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,8 +13,16 @@ namespace monogameTest
 	public enum GameState
 	{
 		Menu,
+		Difficulty,
 		Play,
 		GameOver
+	}
+
+	public enum Difficulty
+	{
+		Easy,
+		Medium,
+		Hard
 	}
 
 	public class Game1 : Game
@@ -28,7 +37,7 @@ namespace monogameTest
 		Random random = new Random();
 		HUD hud = new HUD();
 		GameState gameState = new GameState();
-		Texture2D gamemenu, gameover;
+		Texture2D gamemenu, gameover, gamedifficulty;
 		SpriteFont goscoreFont;
 
 		public Game1 ()
@@ -59,6 +68,7 @@ namespace monogameTest
 			sm.LoadContent (Content);
 			gamemenu = Content.Load<Texture2D> ("Gamemenu");
 			gameover = Content.Load<Texture2D> ("Gameover");
+			gamedifficulty = Content.Load<Texture2D> ("gamedifficulty");
 			goscoreFont = Content.Load<SpriteFont> ("Decker");
 
 			//TODO: use this.Content to load your game content here 
@@ -80,6 +90,34 @@ namespace monogameTest
 					KeyboardState keystate1 = Keyboard.GetState ();
 					if (keystate1.IsKeyDown (Keys.Enter)) 
 					{
+						gameState = GameState.Difficulty;
+					}
+					bg.speed = 1;
+					bg.Update (gameTime);
+					break;
+				}
+			case GameState.Difficulty:
+				{
+					hud.InitHScoreFile ();
+					KeyboardState keystate2 = Keyboard.GetState ();
+					if (keystate2.IsKeyDown (Keys.D1))
+					{
+						hud.diff = Difficulty.Easy;
+						hud.LoadHighScoreE ();
+						gameState = GameState.Play;
+						MediaPlayer.Play (sm.bgM);
+					}
+					if (keystate2.IsKeyDown (Keys.D2))
+					{
+						hud.diff = Difficulty.Medium;
+						hud.LoadHighScoreM ();
+						gameState = GameState.Play;
+						MediaPlayer.Play (sm.bgM);
+					}
+					if (keystate2.IsKeyDown (Keys.D3))
+					{
+						hud.diff = Difficulty.Hard;
+						hud.LoadHighScoreH ();
 						gameState = GameState.Play;
 						MediaPlayer.Play (sm.bgM);
 					}
@@ -97,7 +135,10 @@ namespace monogameTest
 							if (p.boundingBox.Intersects(e.bulletList[i].boundingBox))
 							{
 								e.bulletList[i].isVisible = false;
-								p.health -= 10;
+								if (hud.diff == Difficulty.Medium || hud.diff == Difficulty.Easy)
+									p.health -= 10;
+								if (hud.diff == Difficulty.Hard)
+									p.health -= 20;
 							}
 						}
 
@@ -108,7 +149,10 @@ namespace monogameTest
 								sm.explosionSound.Play ();
 								explosionList.Add(new Explosion(Content.Load<Texture2D>("explosion3"), new Vector2(e.position.X,e.position.Y)));
 								p.bulletList[i].isVisible = false;
-								e.hp -= 100;
+								if (hud.diff == Difficulty.Easy)
+									e.hp -= 100;
+								if (hud.diff == Difficulty.Medium || hud.diff == Difficulty.Hard)
+									e.hp -= 50;
 							}
 						}
 						if (e.hp <= 0) 
@@ -125,7 +169,39 @@ namespace monogameTest
 					LoadEnemies();
 					ManageExplosions ();
 					if (p.health <= 0)
+					{
+						if (hud.diff == Difficulty.Easy) 
+						{
+							StreamWriter writer = new StreamWriter ("highscoreE.txt");
+							if (hud.highScoreE < hud.playerScore) 
+							{
+								hud.highScoreE = hud.playerScore;
+								writer.WriteLine (hud.playerScore);
+							}
+							writer.Close ();
+						}
+						if (hud.diff == Difficulty.Medium) 
+						{
+							StreamWriter writer = new StreamWriter ("highscoreM.txt");
+							if (hud.highScoreM < hud.playerScore) 
+							{
+								hud.highScoreM = hud.playerScore;
+								writer.WriteLine (hud.playerScore);
+							}
+							writer.Close ();
+						}
+						if (hud.diff == Difficulty.Hard) 
+						{
+							StreamWriter writer = new StreamWriter ("highscoreH.txt");
+							if (hud.highScoreH < hud.playerScore) 
+							{
+								hud.highScoreH = hud.playerScore;
+								writer.WriteLine (hud.playerScore);
+							}
+							writer.Close ();
+						}
 						gameState = GameState.GameOver;
+					}
 					break;
 				}
 			case GameState.GameOver:
@@ -166,6 +242,12 @@ namespace monogameTest
 					spriteBatch.Draw (gamemenu, new Vector2 (0, 0), Color.White);
 					break;
 				}
+			case GameState.Difficulty:
+				{
+					bg.Draw (spriteBatch);
+					spriteBatch.Draw (gamedifficulty, new Vector2 (0, 0), Color.White);
+					break;
+				}
 			case GameState.Play:
 				{
 					bg.Draw(spriteBatch);
@@ -186,6 +268,13 @@ namespace monogameTest
 					bg.Draw(spriteBatch);
 					spriteBatch.Draw (gameover, new Vector2 (0, 0), Color.White);
 					spriteBatch.DrawString (goscoreFont, "Your score was : " + hud.playerScore, new Vector2 (160, 300), Color.White);
+					if (hud.diff == Difficulty.Easy)
+						spriteBatch.DrawString (goscoreFont, "High score : " + hud.highScoreE, new Vector2 (160, 320), Color.White);
+					if (hud.diff == Difficulty.Medium)
+						spriteBatch.DrawString (goscoreFont, "High score : " + hud.highScoreM, new Vector2 (160, 320), Color.White);
+					if (hud.diff == Difficulty.Hard)
+						spriteBatch.DrawString (goscoreFont, "High score : " + hud.highScoreH, new Vector2 (160, 320), Color.White);
+					spriteBatch.DrawString (goscoreFont, "Difficulty : " + hud.diff.ToString(), new Vector2 (160, 340), Color.White);
 					break;
 				}
 			}
@@ -196,10 +285,14 @@ namespace monogameTest
 
 		public void LoadEnemies()
 		{
+			int n;
 			int rndX = random.Next(0, 380);
 			int rndY = random.Next(-500, -100);
-
-			if(enemyList.Count < 5)
+			if (hud.diff == Difficulty.Easy || hud.diff == Difficulty.Medium)
+				n = 5;
+			else
+				n = 7;
+			if(enemyList.Count < n)
 			{
 				enemyList.Add(new Enemy(Content.Load<Texture2D>("enemy.png"), new Vector2(rndX, rndY), Content.Load<Texture2D>("enemybullet.png")));
 			}
